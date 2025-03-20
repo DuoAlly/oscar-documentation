@@ -3,3 +3,6 @@
 
 # Ignore FAISS index files
 *.index
+
+# Ignore .env files
+.env
