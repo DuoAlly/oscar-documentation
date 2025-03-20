@@ -12,7 +12,7 @@ client = OpenAI()
 SYSTEM_MESSAGE_OSCAR = (
     "You are a helpful assistant specialized in Oscar documentation. "
     "If the question is related to Oscar documentation, provide detailed answers using the given context. "
-    "For greetings or general queries, feel free to engage in a friendly manner."
+    "For greetings or goodbyes or general queries, feel free to engage in a friendly manner."
 )
 
 # Python Flask Backend
@@ -48,7 +48,7 @@ def query_chatbot(query, model, index, chunk_metadata, top_k=5):
 
     # Build the prompt with the context and the question
     prompt = (
-        "You are an expert on the Oscar documentation. Answer questions using the provided context below.\n\n"
+        f"{SYSTEM_MESSAGE_OSCAR}\n\n"
         "Context:\n"
         f"{context}\n\n"
         "Question: " + query + "\nAnswer:"
