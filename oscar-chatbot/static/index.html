@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Oscar Chatbot</title>
+  <meta name="description" content="Overview of OSCAR Supercomputer">
+  <meta property="og:title" content="Overview | Oscar">
+  <meta property="og:description" content="Overview of OSCAR Supercomputer">
+  <meta property="og:image" content="https://docs.ccv.brown.edu/oscar/~gitbook/ogimage/-LcWJ975YdyYxbrWLWdp">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="https://docs.ccv.brown.edu/~gitbook/image?url=https%3A%2F%2F4272811953-files.gitbook.io%2F%7E%2Ffiles%2Fv0%2Fb%2Fgitbook-legacy-files%2Fo%2Fspaces%252F-LcWJ6pKCQH6l3rl9IQa%252Favatar.png%3Fgeneration%3D1555340403697268%26alt%3Dmedia&amp;width=32&amp;dpr=2&amp;quality=100&amp;sign=a8777490&amp;sv=2" type="image/icon type">
+
+  <style>
+    body {
+      background-color: #f9f9f9;
+      font-family: "Inter", sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    /* Top Bar Styles */
+    .top-bar {
+      background-color: #fff;
+      border-bottom: 1px solid #eaeaea;
+    }
+    .top-bar > div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none; /* Remove underline */
+    }
+    .header-logo img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+    .oscar-text {
+      overflow: hidden;
+      max-width: 18ch;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #333;
+    }
+    @media (min-width: 1024px) {
+      .oscar-text {
+        max-width: 24ch;
+        font-size: 1.125rem;
+      }
+    }
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+    .link {
+      text-decoration: none; /* Remove underline */
+      color: #333;
+    }
+    /* Chat Container */
+    .chat-container {
+      max-width: 800px;
+      margin: 20px auto 80px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    .chat-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .chat-header img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+    .chat-header .oscar-text {
+      max-width: none;
+      font-size: 1.25rem;
+    }
+    .chat-window {
+      height: 400px;
+      overflow-y: auto;
+      border: 1px solid #eee;
+      padding: 15px;
+      margin-bottom: 20px;
+      background: #fafafa;
+    }
+    .message {
+      margin: 10px 0;
+      line-height: 1.4;
+    }
+    .message.user {
+      text-align: right;
+      color: #007bff;
+    }
+    .message.bot {
+      text-align: left;
+      color: #333;
+    }
+    .input-group {
+      display: flex;
+      gap: 10px;
+    }
+    .input-group input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    .input-group button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      border: none;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .input-group button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div>
+      <div class="header-logo">
+        <a href="https://docs.ccv.brown.edu/oscar/" class="header-logo">
+          <img alt="Oscar logo" src="https://docs.ccv.brown.edu/~gitbook/image?url=https%3A%2F%2F4272811953-files.gitbook.io%2F%7E%2Ffiles%2Fv0%2Fb%2Fgitbook-legacy-files%2Fo%2Fspaces%252F-LcWJ6pKCQH6l3rl9IQa%252Favatar.png%3Fgeneration%3D1555340403697268%26alt%3Dmedia&amp;width=32&amp;dpr=2&amp;quality=100&amp;sign=a8777490&amp;sv=2" width="40" height="40">
+          <div class="oscar-text">Oscar</div>
+        </a>
+      </div>
+      <div class="nav-links">
+        <a href="https://ccv.brown.edu" class="link">Home</a>
+        <a href="https://ccv.brown.edu/services/" class="link">Services</a>
+        <a href="https://docs.ccv.brown.edu/documentation/" class="link">Documentation</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat Container -->
+  <div class="chat-container">
+    <div class="chat-header">
+      <img alt="Oscar logo" src="https://docs.ccv.brown.edu/~gitbook/image?url=https%3A%2F%2F4272811953-files.gitbook.io%2F%7E%2Ffiles%2Fv0%2Fb%2Fgitbook-legacy-files%2Fo%2Fspaces%252F-LcWJ6pKCQH6l3rl9IQa%252Favatar.png%3Fgeneration%3D1555340403697268%26alt%3Dmedia&amp;width=32&amp;dpr=2&amp;quality=100&amp;sign=a8777490&amp;sv=2" width="40" height="40">
+      <div class="oscar-text">Oscar Chatbot</div>
+    </div>
+    <div class="chat-window" id="chat-window">
+      <!-- Chat messages will appear here -->
+    </div>
+    <div class="input-group">
+      <input type="text" id="question-input" placeholder="Type your question..." />
+      <button id="send-btn">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const chatWindow = document.getElementById("chat-window");
+    const questionInput = document.getElementById("question-input");
+    const sendBtn = document.getElementById("send-btn");
+
+    function appendMessage(sender, text) {
+      const messageDiv = document.createElement("div");
+      messageDiv.classList.add("message", sender);
+      messageDiv.innerText = text;
+      chatWindow.appendChild(messageDiv);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    async function sendQuestion() {
+      const question = questionInput.value.trim();
+      if (!question) return;
+
+      appendMessage("user", question);
+      questionInput.value = "";
+
+      try {
+        const response = await fetch("/query", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ question })
+        });
+        const data = await response.json();
+        if (data.error) {
+          appendMessage("bot", "Error: " + data.error);
+        } else {
+          appendMessage("bot", data.answer);
+        }
+      } catch (error) {
+        appendMessage("bot", "Error: " + error.message);
+      }
+    }
+
+    sendBtn.addEventListener("click", sendQuestion);
+    questionInput.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") {
+        sendQuestion();
+      }
+    });
+  </script>
+</body>
+</html>
