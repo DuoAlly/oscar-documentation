@@ -227,6 +227,26 @@
     
     const sendIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>`;
 
+    // Simple markdown converter function
+    function convertMarkdown(text) {
+      // Handle links: [text](url)
+      text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+      
+      // Handle bold: **text**
+      text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      
+      // Handle italic: *text*
+      text = text.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+      
+      // Handle code: `code`
+      text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
+      
+      // Handle line breaks
+      text = text.replace(/\n/g, '<br>');
+      
+      return text;
+    }
+
     function appendMessage(sender, text) {
       const messageDiv = document.createElement("div");
       messageDiv.classList.add("message", sender);
@@ -239,7 +259,13 @@
       // Create message content container
       const contentDiv = document.createElement("div");
       contentDiv.classList.add("message-content");
-      contentDiv.innerText = text;
+      
+      // Use innerHTML for bot messages to render markdown, but innerText for user messages
+      if (sender === "bot") {
+        contentDiv.innerHTML = convertMarkdown(text);
+      } else {
+        contentDiv.innerText = text;
+      }
       
       // Append elements
       messageDiv.appendChild(iconDiv);
@@ -288,7 +314,7 @@
       document.getElementById('send-icon').innerHTML = sendIcon;
       
       // Add welcome message
-      appendMessage("bot", "Hello! How can I help you with Oscar documentation today?");
+      appendMessage("bot", "Hello! I'm Oscar, your supercomputing assistant. How can I help you today?");
     });
   </script>
 </body>
