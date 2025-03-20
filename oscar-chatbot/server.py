@@ -8,6 +8,13 @@ from flask import Flask, request, jsonify, send_from_directory
 # OpenAI API Key
 client = OpenAI()
 
+# Define constants for system messages and responses.
+SYSTEM_MESSAGE_OSCAR = (
+    "You are a helpful assistant specialized in Oscar documentation. "
+    "If the question is related to Oscar documentation, provide detailed answers using the given context. "
+    "For greetings or general queries, feel free to engage in a friendly manner."
+)
+
 # Python Flask Backend
 app = Flask(__name__, static_url_path='', static_folder='static')
 
@@ -22,10 +29,10 @@ def load_index_and_metadata(index_path="faiss_index.index", metadata_path="chunk
 
 def query_chatbot(query, model, index, chunk_metadata, top_k=5):
     """
-    Process the query: generate its embedding, retrieve the most similar document chunks,
+    Process the query: if it's a greeting, return a friendly response.
+    Otherwise, generate its embedding, retrieve the most similar document chunks,
     and then generate an answer via OpenAI's GPT-3.5-turbo.
     """
-
     # Generate query embedding
     query_embedding = model.encode(query, convert_to_numpy=True)
     query_embedding = np.expand_dims(query_embedding, axis=0)
@@ -39,20 +46,19 @@ def query_chatbot(query, model, index, chunk_metadata, top_k=5):
     # Combine the retrieved chunks to form the context
     context = "\n\n".join(retrieved_chunks)
 
-    # Build the prompt with strict instructions
+    # Build the prompt with the context and the question
     prompt = (
-        "You are an expert on the Oscar documentation and should only answer questions that are "
-        "directly related to Oscar or the provided documentation context.'\n\n"
+        "You are an expert on the Oscar documentation. Answer questions using the provided context below.\n\n"
         "Context:\n"
         f"{context}\n\n"
         "Question: " + query + "\nAnswer:"
     )
 
     # Call OpenAI's API to generate an answer
-    response = client.chat.completions.create(model="gpt-3.5-turbo",
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You are a helpful assistant specialized in Oscar documentation. "
-            "You must only answer questions about Oscar documentation. "},
+            {"role": "system", "content": SYSTEM_MESSAGE_OSCAR},
             {"role": "user", "content": prompt}
         ],
         max_tokens=200,
