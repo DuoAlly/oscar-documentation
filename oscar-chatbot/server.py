@@ -29,8 +29,7 @@ def load_index_and_metadata(index_path="faiss_index.index", metadata_path="chunk
 
 def query_chatbot(query, model, index, chunk_metadata, top_k=5):
     """
-    Process the query: if it's a greeting, return a friendly response.
-    Otherwise, generate its embedding, retrieve the most similar document chunks,
+    Process the query: generate its embedding, retrieve the most similar document chunks,
     and then generate an answer via OpenAI's GPT-3.5-turbo.
     """
     # Generate query embedding
@@ -61,7 +60,7 @@ def query_chatbot(query, model, index, chunk_metadata, top_k=5):
             {"role": "system", "content": SYSTEM_MESSAGE_OSCAR},
             {"role": "user", "content": prompt}
         ],
-        max_tokens=200,
+        max_tokens=800,
         temperature=0.2,
     )
 
